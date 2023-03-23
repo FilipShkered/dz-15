@@ -1,35 +1,64 @@
 class Tabs {
-    static CLASS_BTN_ACTIVE = "btn-active"
-    static CLASS_TAB_CONTENT = "tab-content"
-    static CLASS_TAB_CONTENT_HIDDEN = "tab-content-hidden"
-    static FIRST_ITEM = 0;
-    constructor(tabs) {
-        this.tabsElement = document.querySelector("#tabs");
-        this.tabButtons = this.tabsElement.querySelectorAll("button");
-        this.tabContents = this.tabsElement.querySelectorAll(".tab-content");
+    static CLASS_NAV_ITEM = "nav-item"
+    static CLASS_NAV_ITEM_ACTIVE = "nav-item-active"
+    static CLASS_CONTENT_ITEM = "content-item"
+    static CLASS_CONTENT_ITEM_ACTIVE = "content-item-active"
+    static ACTIVE_TAB = 0
 
-        
+    constructor(tabsRoot) {
+        const [navElem, contentElem] = tabsRoot.children
+
+        this.tabsRoot = tabsRoot
+        this.navElem = Array.from(navElem.children)
+        this.contentElem = Array.from(contentElem.children)
+        this.bindStyles()
+        this.bindEvents()
+        this.setTabContents(Tabs.ACTIVE_TAB)
+    }
+
+    bindStyles() {
+        this.navElem.forEach((navElem) => {
+            navElem.classList.add(Tabs.CLASS_NAV_ITEM);
+        })
+
+        this.contentElem.forEach((contentElem) => {
+            contentElem.classList.add(Tabs.CLASS_CONTENT_ITEM);
+        })
+    }
+
+    bindEvents() {
+        this.tabsRoot.addEventListener('click', this.onTabsRootClick.bind(this))
+    }
+
+    onTabsRootClick(e) {
+        const target = e.target
+
+        if (this.isNavBtn(target)) {
+            const index = this.findNavIndex(target)
 
 
-
-        this.tabButtons.forEach((button, index) => {
-            button.addEventListener("click", () => {
-                this.displayContent(index);
-            });
-        });
-
-        this.displayContent(Tabs.FIRST_ITEM);
-
-        this.tabContents.forEach(content => content.classList.add(Tabs.CLASS_TAB_CONTENT_HIDDEN));
-       
+            this.hideTabContents()
+            this.setTabContents(index)
+        }
 
     }
 
-    displayContent(index) {
-        this.tabContents.forEach(content => content.classList.remove(Tabs.CLASS_TAB_CONTENT));
-        this.tabContents[index].classList.add(Tabs.CLASS_TAB_CONTENT);
-        this.tabButtons.forEach(button => button.classList.remove(Tabs.CLASS_BTN_ACTIVE));
-        this.tabButtons[index].classList.add(Tabs.CLASS_BTN_ACTIVE);
+    isNavBtn(el) {
+        return el.classList.contains(Tabs.CLASS_NAV_ITEM)
     }
 
+    findNavIndex(navEl) {
+        return this.navElem.indexOf(navEl)
+    }
+
+    hideTabContents() {
+        this.navElem[Tabs.ACTIVE_TAB].classList.remove(Tabs.CLASS_NAV_ITEM_ACTIVE)
+        this.contentElem[Tabs.ACTIVE_TAB].classList.remove(Tabs.CLASS_CONTENT_ITEM_ACTIVE)
+    }
+
+    setTabContents(index) {
+        Tabs.ACTIVE_TAB = index
+        this.navElem[index].classList.add(Tabs.CLASS_NAV_ITEM_ACTIVE)
+        this.contentElem[index].classList.add(Tabs.CLASS_CONTENT_ITEM_ACTIVE)
+    }
 }

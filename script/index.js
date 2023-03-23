@@ -1,4 +1,4 @@
-const tabs = document.querySelector('#tabs');
-new Tabs("#tabs")
+const tabsEl = document.querySelector('#tabs');
+new Tabs(tabsEl)
 
 

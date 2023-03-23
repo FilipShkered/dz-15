@@ -4,38 +4,28 @@
 
 }
 
-.nav-bar {
-    width: 213.6px;
-   
-}
-
-.nav-items button{
- padding: 0 20px;
-}
-
-.tab-btn {
+.nav-item {
     border: none;
     
 }
 
-#tabs .tab-content {
-    padding: 10px 0 30px;
-    margin-top: -1px;
-    display: block;
-    background-color: yellow;
-    border-radius: 0 0 5px 5px;
-    transition: 0.3s ease-in-out;
-    
-}
-
-.tab-content-hidden {
-    display: none;
-}
-
-
-.btn-active {
+.nav-item-active {
     background-color: yellow;
     border: none;
     border-radius: 5px 5px 0 0;
     transition: 0.3s ease-out;
+
+}
+
+.content-item {
+    width: 250px;
+    padding: 10px 0 30px;
+    display: none;
+    background-color: yellow;
+    border-radius: 0 0 5px 5px;
+    transition: 0.3s ease-in-out;
+}
+
+.content-item-active {
+    display: block;
 }
